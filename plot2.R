@@ -8,15 +8,16 @@ ReadMerged <- function()
 
 #Read in data
 data <- ReadMerged();
-emissionsByYear <- tapply(data$Emissions, data$year, sum);
+filter <- which(data$fips == 24510);
+baltEmissionsByYear <- tapply(data$Emissions[filter], data$year[filter], sum);
 
 #Note we're using png() instead of dev.copy() to avoid resizing issues as per TA Comment
-png(filename="plot1.png", width = 800, height = 600);
+png(filename="plot2.png", width = 800, height = 600);
 
 #Plot the values without an X Axis, and use a custom X axis s.t. it's more obvious what
 #year each measurement is for
-plot(names(emissionsByYear), emissionsByYear, type="b", 
-     main = "Total Emissions by Year", 
+plot(names(baltEmissionsByYear), baltEmissionsByYear, type="b", 
+     main = "Total Emissions by Year @ Baltimore City, Maryland", 
      xlab = "Year", ylab = "Total Emissions in Tons",
      xaxt = "n");
 axis(1, at=names(baltEmissionsByYear));
